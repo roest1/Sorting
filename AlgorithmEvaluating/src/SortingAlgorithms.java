@@ -2,11 +2,25 @@
  * @author rileyoest
  */
 public class SortingAlgorithms {
+
+
     /**
     selection sort
 
     Time Complexity ∈ Ο(n²) for comparisons and swaps in all cases.
     Space Complexity ∈ O(1) as it sorts in-place.
+
+     * Operates in n rounds
+     *
+     * At the kth iteration, find min(A.subArray((k - 1) + 1, A.length)) // call this the minimum item of the set.
+     *    Insert this minimum element at the kth index of the array.
+     *
+     * ........Correctness......................
+     *     Divide & Conquer
+     *
+     *     - Solve subproblems individually.
+     *     - Combine results in one mechanism to solve the original problem
+     *
     */
     public static void selectionSort(int[] array) {
         for (int i = 0; i < array.length; i++) {
@@ -29,6 +43,22 @@ public class SortingAlgorithms {
     * Worst and Avg cases ∈ O(n²) for comparisons and swaps.
     * Best case ∈ Ο(n) if array is already sorted
     Space Complexity ∈ O(1) as it sorts in-place.
+
+     *  Operates in n rounds
+     *
+     *  At the kth iteration, we insert at A[k - (swap left until sorted with its neighbors)]
+     *
+     *  1.) [8, 9, 4, 3, 6] ==>> [8, 9, 4, 3, 6]
+     *  2.) ==>> [8, 4, 9, 3, 6] ==>> [4, 8, 9, 3, 6]
+     *  3.) ==>> [4, 8, 3, 9, 6] ==>> [4, 3, 8, 9, 6] ==>> [3, 4, 8, 9, 6]
+     *  4.) ==>> [3, 4, 8, 6, 9] ==>> [3, 4, 6, 8, 9]. /Sorting Complete/.
+     *
+     *  ........Correctness......................
+     *  If A.length = 1 => Insert still works
+     *
+     *  Assume prior to kth iteration, A[1..k - 1] is sorted. & beyond that, is to be sorted. (Known as Induction Step)
+     *  ~Proof~. true because we insert current element in the correct position every time and the elements prior to that remain in the same sorted positions.
+     *  therefore at the end of n steps, we arrive to A being completely sorted.
      */
     public static void insertionSort(int[] array) {
         int i, key, j;
@@ -93,6 +123,27 @@ public class SortingAlgorithms {
 
     Time Complexity ∈ O(nlog(n)) in all cases
     Space Complexity ∈ O(n) for using arrays
+
+
+    *  ........Correctness.....................
+     *
+     *      Divide & Conquer
+     *
+     *  1.) Divide list into 2 halves
+     *  2.) Sort A & B using mergeSort helper function
+     *  3.) Merge sorted lists of A and B
+     *
+     *
+     * height h of mergesort tree is O(logn)
+     *      - at each recursive call, we divide the sequence in half.
+     *
+     *      - Overall amount of work done at nodes of depth i is O(n)
+     *                 . Make 2^(i + 1) recursive calls.
+     *                 . Partition and merge 2^i sequences of size n/2^i
+     *
+     *  Therefore total running time is O(nlogn)
+     *
+     * 
     */
     public static void mergeSort(int[] array) {
         if (array.length < 2) {
